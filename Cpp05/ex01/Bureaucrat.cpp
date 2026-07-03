@@ -1,5 +1,7 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
+class Form;
 
 Bureaucrat::Bureaucrat():_name("Default Bureaucrat"), _grade(150) {}; //називається списком ініціалізації членів класу (Member Initializer List)
 
@@ -57,13 +59,31 @@ void Bureaucrat::decrementGrade() {
 
 // Реалізація винятків (Exceptions)
 // Метод what() повертає рядок-пояснення помилки
-const char* Bureaucrat::GradeTooHighException::what() const throw() {
+const char* Bureaucrat::GradeTooHighException::what() const throw() { //promise compilator that this funk will not throw another error or exception
     return "Grade is too high! Highest possible grade is 1.";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
     return "Grade is too low! Lowest possible grade is 150.";
 }
+
+void Bureaucrat::signForm(Form& form) {
+    try {
+        // Намагаємось підписати форму. 
+        // Якщо ранг малий, beSigned() викине Form::GradeTooLowException
+        form.beSigned(*this); 
+        
+        // Якщо виняток не викинуто — виводимо успіх
+        std::cout << this->_name << " signed " << form.getName() << std::endl;
+    }
+    catch (const std::exception& e) {
+        // Якщо зловили помилку — виводимо причину (e.what())
+        std::cout << this->_name << " couldn't sign " << form.getName() 
+                  << " because " << e.what() << std::endl;
+    }
+}
+
+
 
 // Перевантаження оператора виводу <<
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& b) {

@@ -5,6 +5,8 @@
 #include <string>
 #include <exception>
 
+class Form;
+
 class Bureaucrat
 {
     private:
@@ -27,6 +29,8 @@ class Bureaucrat
     // Grade operations
     void incrementGrade(); // 3 -> 2
     void decrementGrade(); // 3 -> 4
+
+    void signForm(Form& form);
 
     class GradeTooHighException : public std::exception //nested classes, so they are part of Bureaucrat.
     {
