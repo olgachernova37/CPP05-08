@@ -83,6 +83,21 @@ void Bureaucrat::signAForm(AForm& AForm) {
     }
 }
 
+void Bureaucrat::executeForm(AForm const & form) const {
+    try {
+        // Викликаємо метод execute самої форми, передаючи поточного бюрократа (*this)
+        form.execute(*this);
+        
+        // Якщо виняток не вилетів — виводимо успішний лог за умовою завдання
+        std::cout << this->_name << " executed " << form.getName() << std::endl;
+    } 
+    catch (const std::exception& e) {
+        // Якщо зловили виняток (не підписано або занизький ранг) — виводимо помилку
+        std::cout << this->_name << " couldn't execute " << form.getName() 
+                  << " because " << e.what() << std::endl;
+    }
+}
+
 
 
 // Перевантаження оператора виводу <<
