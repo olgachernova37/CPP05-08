@@ -119,7 +119,7 @@ int main() {
     }
 
     // -------------------------------------------------------------------------
-    printTestHeader("Test 7: Verification of Orthodox Canonical Form (Copying)");
+    printTestHeader("Test 7: Verification of Orthodox Canonical AForm (Copying)");
     // -------------------------------------------------------------------------
     try {
         Bureaucrat original("Original", 42);

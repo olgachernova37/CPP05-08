@@ -17,7 +17,7 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name) {
 // Конструктор копіювання
 Bureaucrat::Bureaucrat(const Bureaucrat& other) : _name(other._name), _grade(other._grade) {}
 
-// Оператор присвоювання (Orthodox Canonical Form)
+// Оператор присвоювання (Orthodox Canonical AForm)
 // Примітка: Оскільки _name є `const std::string`, ми не можемо його переприсвоїти.
 // Змінюємо тільки _grade. Це абсолютно нормально для цього завдання.
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) { ///this mean змінна класу exactly this one

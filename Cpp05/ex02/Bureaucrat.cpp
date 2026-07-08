@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
-class Form;
+class AForm;
 
 Bureaucrat::Bureaucrat():_name("Default Bureaucrat"), _grade(150) {}; //називається списком ініціалізації членів класу (Member Initializer List)
 
@@ -19,7 +19,7 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name) {
 // Конструктор копіювання
 Bureaucrat::Bureaucrat(const Bureaucrat& other) : _name(other._name), _grade(other._grade) {}
 
-// Оператор присвоювання (Orthodox Canonical Form)
+// Оператор присвоювання (Orthodox Canonical AForm)
 // Примітка: Оскільки _name є `const std::string`, ми не можемо його переприсвоїти.
 // Змінюємо тільки _grade. Це абсолютно нормально для цього завдання.
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) { ///this mean змінна класу exactly this one
@@ -67,18 +67,18 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
     return "Grade is too low! Lowest possible grade is 150.";
 }
 
-void Bureaucrat::signForm(Form& form) {
+void Bureaucrat::signAForm(AForm& AForm) {
     try {
         // Намагаємось підписати форму. 
-        // Якщо ранг малий, beSigned() викине Form::GradeTooLowException
-        form.beSigned(*this); 
+        // Якщо ранг малий, beSigned() викине AForm::GradeTooLowException
+        AForm.beSigned(*this); 
         
         // Якщо виняток не викинуто — виводимо успіх
-        std::cout << this->_name << " signed " << form.getName() << std::endl;
+        std::cout << this->_name << " signed " << AForm.getName() << std::endl;
     }
     catch (const std::exception& e) {
         // Якщо зловили помилку — виводимо причину (e.what())
-        std::cout << this->_name << " couldn't sign " << form.getName() 
+        std::cout << this->_name << " couldn't sign " << AForm.getName() 
                   << " because " << e.what() << std::endl;
     }
 }

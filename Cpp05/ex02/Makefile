@@ -1,8 +1,8 @@
 CXX= c++
 CXXFLAGS= -Wall -Wextra -Werror -g -std=c++98
 TARGET= bureaucratt
-SRC= main.cpp Bureaucrat.cpp Form.cpp
-HEADERS= Bureaucrat.hpp Form.hpp
+SRC= main.cpp Bureaucrat.cpp AForm.cpp
+HEADERS= Bureaucrat.hpp AForm.hpp
 
 all: $(TARGET)
 

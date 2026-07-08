@@ -5,7 +5,7 @@
 #include <string>
 #include <exception>
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -30,7 +30,7 @@ class Bureaucrat
     void incrementGrade(); // 3 -> 2
     void decrementGrade(); // 3 -> 4
 
-    void signForm(Form& form);
+    void signAForm(AForm& AForm);
 
     class GradeTooHighException : public std::exception //nested classes, so they are part of Bureaucrat.
     {
