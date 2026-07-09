@@ -1,5 +1,6 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
+#include "Intern.hpp"
 #include <ctime>   // для time()
 #include <cstdlib> // для srand()
 #include "ShrubberyCreationForm.hpp"
@@ -24,22 +25,14 @@ int main ()
     std::cout << "\n=== Test 2: Shrubbery Creation Form ===" << std::endl;
     try {
         Bureaucrat boss("Hermione", 1);
-        Bureaucrat lowRank("Ron", 140); // Can sign (req 145) but can't execute (req 137)
+        Bureaucrat lowRank("Ron", 140); 
         ShrubberyCreationForm shrub("garden");
 
         std::cout << shrub << std::endl;
-
-        // Test executing unsigned form (Should fail)
         boss.executeForm(shrub); 
-
-        // Sign the form using the Bureaucrat's method
         boss.signAForm(shrub);
         std::cout << shrub << std::endl;
-
-        // Test execution by someone with too low grade (Ron is 140, needs 137)
         lowRank.executeForm(shrub);
-
-        // Test successful execution by the Boss
         boss.executeForm(shrub);
     }
     catch(const std::exception& e) {
@@ -52,11 +45,8 @@ int main ()
         RobotomyRequestForm robot("Bender");
 
         std::cout << robot << std::endl;
-
-        // Sign the form directly using the Form's method
         robot.beSigned(boss);
         
-        // Execute 3 times to test the 50/50 randomness
         boss.executeForm(robot);
         boss.executeForm(robot);
         boss.executeForm(robot);
@@ -72,18 +62,54 @@ int main ()
         PresidentialPardonForm pres("Arthur Weasley");
 
         std::cout << pres << std::endl;
-
         boss.signAForm(pres);
-        
-        // Peasant trying to execute presidential order (Should fail)
         peasant.executeForm(pres);
-        
-        // Boss executing successfully
         boss.executeForm(pres);
     }
     catch(const std::exception& e) {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     } 
+
+    std::cout << "\n=== Test 5: Intern Tests ===" << std::endl;
+    {
+        Intern someRandomIntern;
+        Bureaucrat boss("Hermione", 1);
+        AForm* rrf = NULL;
+
+        // 1. Successful test (Robotomy Request)
+        std::cout << "--- Intern Test: Good Form ---" << std::endl;
+        rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+        if (rrf) {
+            std::cout << *rrf << std::endl;
+            boss.signAForm(*rrf);
+            boss.executeForm(*rrf);
+            delete rrf; // Clean up memory!
+            rrf = NULL;
+        }
+
+        std::cout << "----------------------------------" << std::endl;
+
+        // 2. Successful test (Presidential Pardon)
+        std::cout << "--- Intern Test: Another Good Form ---" << std::endl;
+        rrf = someRandomIntern.makeForm("presidential pardon", "Harry Potter");
+        if (rrf) {
+            boss.signAForm(*rrf);
+            boss.executeForm(*rrf);
+            delete rrf; // Clean up memory!
+            rrf = NULL;
+        }
+
+        std::cout << "----------------------------------" << std::endl;
+
+        // 3. Bad test (Form name doesn't exist)
+        std::cout << "--- Intern Test: Bad Form ---" << std::endl;
+        rrf = someRandomIntern.makeForm("invalid tax form", "Voldemort");
+        if (rrf == NULL) {
+            std::cout << "Success: Intern correctly returned NULL for an invalid form name!" << std::endl;
+        } else {
+            delete rrf; // Defensive fallback
+        }
+    }
 
     return (0);
 }
