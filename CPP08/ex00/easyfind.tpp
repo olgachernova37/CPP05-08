@@ -1,0 +1,3 @@
+#ifndef EASYFIND_TPP
+#define EASYFIND_TPP
+
